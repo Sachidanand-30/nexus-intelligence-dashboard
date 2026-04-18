@@ -1,0 +1,24 @@
+[OFFICIAL PRODUCT SPECIFICATIONS]
+- Operating Temperature Range: 0°C to 40°C (surface temperature must not exceed 42°C under sustained workload).
+- Battery: 5000mAh Li-Po, rated for 800 charge cycles. Expected standby drain: ≤ 3% overnight.
+- Charging: 67W fast charging. Device temperature during charging must not exceed 38°C.
+- Display: 6.7" AMOLED, 120Hz refresh rate, Gorilla Glass Victus 2. Drop resistance rated for 1m on hard surfaces. Peak brightness: 1500 nits.
+- Connectivity: WiFi 6E (802.11ax), Bluetooth 5.3. Signal must maintain stable connection within 10m line-of-sight.
+- Software & OS: NexusOS 4 (based on Android 14). OTA updates delivered quarterly. Device must not require restart more than once per software update cycle.
+- Camera: 108MP Main Sensor, 12MP Ultra-wide, 4K video recording up to 60fps. Max continuous recording time at 4K/60fps is 30 minutes due to thermal limits.
+- Audio: Stereo dual speakers. Maximum output: 92dB. Headphone jack: Not included (requires USB-C adapter).
+- Water & Dust Resistance: IP68 rating (water resistant up to 1.5 meters for 30 minutes in fresh water). NOT resistant to salt water, pool chemicals, or pressurized water.
+- Storage: 256GB UFS 4.0. No expandable microSD slot.
+- Biometrics: In-display ultrasonic fingerprint reader. Expected unlock time < 0.3 seconds. Optical face unlock (not supported in pitch-black environments).
+
+[TROUBLESHOOTING & RESOLUTION PLAYBOOKS]
+- Thermal / Overheating (Critical): Advise the customer to power off the device immediately. Direct them to visit the nearest authorized Nexus Service Center for a free hardware diagnostic. Do NOT suggest continuing to use the device.
+- Battery Swelling (Safety Hazard): Instruct the customer to stop charging immediately. Direct them to our emergency support line (1-800-NEXUS-REPLACE) for an instant mail-in replacement.
+- Battery Drain (Normal Wear): If device has > 800 charge cycles, inform customer they are eligible for a discounted battery replacement. If drain exceeds 10% overnight, advise checking battery usage in Settings.
+- Connectivity Issues (WiFi/Bluetooth): Instruct the customer to go to Settings > System > "Reset Network Settings" and restart the device. Ensure they are within the 10m limit.
+- Water Damage (Outside Warranty): If customer dropped device in salt water or pool, explain that IP68 only covers fresh water and direct them to paid repair services.
+- Camera Overheating (4K Video): If recording stops after 30 minutes at 4K/60fps, explain this is expected behavior to protect internal components. Advise using 1080p for longer continuous sessions.
+- Biometric Failures (Lighting/Screen Protector): If face unlock fails in the dark, advise using fingerprint. If fingerprint is slow, advise removing thick 3rd-party glass screen protectors and re-registering the print.
+- Storage Complaints (No MicroSD): Apologize for the inconvenience, highlight the fast UFS 4.0 speeds, and offer a link to our Nexus Cloud Storage subscription.
+- Missing Headphone Jack: Clarify that the device uses USB-C for audio. Offer a 10% discount code (NEXUSAUDIO10) on wireless Nexus Earbuds.
+- General/Unknown Hardware Defects: Request that the customer DM us their order number and device IMEI so we can initiate a standard warranty claim or direct them to the store.

@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Pro Smartphone — Customer Reviews</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { overflow: auto; }
+
+        .storefront {
+            max-width: 960px;
+            margin: 0 auto;
+            padding: 32px 24px;
+            min-height: 100vh;
+        }
+
+        /* --- Top Bar --- */
+        .store-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 28px;
+        }
+
+        .store-logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .store-logo .dot {
+            width: 8px;
+            height: 8px;
+            background: var(--primary);
+            border-radius: 50%;
+        }
+
+        .store-badge {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            background: var(--primary-soft);
+            color: var(--primary);
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .dashboard-link {
+            font-size: 0.8rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dashboard-link:hover { text-decoration: underline; }
+
+        /* --- Product Hero --- */
+        .product-hero {
+            display: flex;
+            gap: 32px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 28px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .product-image {
+            width: 220px;
+            height: 220px;
+            background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .product-image-icon {
+            font-size: 5rem;
+            opacity: 0.5;
+        }
+
+        .product-info { flex: 1; }
+
+        .product-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .product-brand {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .product-rating {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .stars { color: #f59e0b; font-size: 1rem; letter-spacing: 2px; }
+
+        .rating-text { font-size: 0.82rem; color: var(--text-secondary); }
+
+        .product-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 14px;
+        }
+
+        .product-price .mrp {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            text-decoration: line-through;
+            font-weight: 400;
+            margin-left: 8px;
+        }
+
+        .product-price .discount {
+            font-size: 0.85rem;
+            color: var(--success);
+            font-weight: 600;
+            margin-left: 6px;
+        }
+
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .product-tag {
+            font-size: 0.7rem;
+            padding: 4px 10px;
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text-secondary);
+        }
+
+        /* --- Write Review --- */
+        .review-form {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 24px;
+            margin-bottom: 28px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .form-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 14px;
+        }
+
+        .form-textarea {
+            width: 100%;
+            min-height: 80px;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            font-family: var(--font);
+            font-size: 0.85rem;
+            color: var(--text);
+            background: var(--bg);
+            resize: vertical;
+            outline: none;
+            transition: border-color 0.15s;
+            margin-bottom: 12px;
+        }
+
+        .form-textarea:focus { border-color: var(--primary); box-shadow: 0 0 0 3px var(--primary-soft); }
+        .form-textarea::placeholder { color: var(--text-muted); }
+
+        .form-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .form-hint { font-size: 0.75rem; color: var(--text-muted); }
+
+        .btn-submit {
+            padding: 9px 24px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius);
+            font-family: var(--font);
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+
+        .btn-submit:hover { background: var(--primary-dark); }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        /* --- Reviews Section --- */
+        .reviews-section {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            overflow: hidden;
+        }
+
+        .reviews-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .reviews-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .reviews-count {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        .reviews-list { padding: 0; }
+
+        /* Single Review */
+        .review-item {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .review-item:last-child { border-bottom: none; }
+
+        .review-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .reviewer-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #dbeafe, #e0e7ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .reviewer-name {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text);
+        }
+
+        .review-time {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            margin-left: auto;
+        }
+
+        .review-stars {
+            color: #f59e0b;
+            font-size: 0.78rem;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+
+        .review-text {
+            font-size: 0.88rem;
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        .review-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            margin-top: 8px;
+        }
+
+        .review-tag {
+            font-size: 0.62rem;
+            font-weight: 500;
+            padding: 2px 6px;
+            border-radius: 4px;
+        }
+
+        .review-tag.positive { background: var(--success-soft); color: var(--success); }
+        .review-tag.negative { background: var(--danger-soft); color: var(--danger); }
+        .review-tag.neutral  { background: rgba(100, 116, 139, 0.08); color: var(--text-muted); }
+
+        /* AI Reply */
+        .ai-reply {
+            margin-top: 14px;
+            padding: 14px 16px;
+            background: #f0f7ff;
+            border: 1px solid #bfdbfe;
+            border-radius: var(--radius);
+            animation: reply-in 0.4s ease;
+        }
+
+        @keyframes reply-in {
+            from { opacity: 0; transform: translateY(6px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .ai-reply-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .ai-reply-badge {
+            font-size: 0.65rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .ai-reply-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .ai-reply-text {
+            font-size: 0.84rem;
+            color: #1e3a5f;
+            line-height: 1.6;
+        }
+
+        /* Status bar */
+        .store-status {
+            font-size: 0.75rem;
+            padding: 8px 12px;
+            border-radius: var(--radius);
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        .store-status.show { display: block; }
+        .store-status.success { color: var(--success); background: var(--success-soft); }
+        .store-status.error { color: var(--danger); background: var(--danger-soft); }
+
+        .empty-reviews {
+            padding: 40px 24px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        /* Live indicator */
+        .live-indicator {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.72rem;
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .live-dot {
+            width: 6px;
+            height: 6px;
+            background: var(--success);
+            border-radius: 50%;
+            animation: blink 2s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <div class="storefront">
+        <!-- Top Bar -->
+        <div class="store-topbar">
+            <div class="store-logo">
+                <span class="dot"></span>
+                Nexus Store
+                <span class="store-badge">Mock Storefront</span>
+            </div>
+            <a href="/" class="dashboard-link" target="_blank">Open Dashboard →</a>
+        </div>
+
+        <!-- Product Hero -->
+        <div class="product-hero">
+            <div class="product-image">
+                <span class="product-image-icon">📱</span>
+            </div>
+            <div class="product-info">
+                <div class="product-name">Nexus Pro Smartphone</div>
+                <div class="product-brand">by Nexus Electronics</div>
+                <div class="product-rating">
+                    <span class="stars">★★★★☆</span>
+                    <span class="rating-text">4.2 out of 5 · <span id="review-count">0</span> reviews</span>
+                </div>
+                <div class="product-price">
+                    ₹24,999
+                    <span class="mrp">₹34,999</span>
+                    <span class="discount">29% off</span>
+                </div>
+                <div class="product-features">
+                    <span class="product-tag">6.7" AMOLED 120Hz</span>
+                    <span class="product-tag">5000mAh Battery</span>
+                    <span class="product-tag">108MP Camera</span>
+                    <span class="product-tag">8GB RAM</span>
+                    <span class="product-tag">5G Ready</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Write a Review -->
+        <div class="review-form">
+            <div class="form-title">Write a Customer Review</div>
+            <textarea id="review-input" class="form-textarea"
+                placeholder="Share your experience with this product..."></textarea>
+            <div id="form-status" class="store-status"></div>
+            <div class="form-actions">
+                <div class="form-hint">Your review will be processed by the Nexus AI pipeline</div>
+                <button id="submit-btn" class="btn-submit">Submit Review</button>
+            </div>
+        </div>
+
+        <!-- Reviews List -->
+        <div class="reviews-section">
+            <div class="reviews-header">
+                <div class="reviews-title">Customer Reviews</div>
+                <div class="live-indicator">
+                    <span class="live-dot"></span>
+                    LIVE
+                </div>
+            </div>
+            <div class="reviews-list" id="reviews-list">
+                <div class="empty-reviews">No reviews yet. Be the first to review this product!</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="storefront.js"></script>
+</body>
+</html>

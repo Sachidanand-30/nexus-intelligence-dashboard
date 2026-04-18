@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nexus Intelligence — Review Intelligence Platform</title>
+    <meta name="description" content="AI-powered product review intelligence platform with anomaly detection, sentiment analysis, and automated strategy synthesis.">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="toast-container" id="toast-container"></div>
+
+    <div class="app-shell">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo-section">
+                <div class="logo-title">
+                    <span class="logo-dot"></span>
+                    Nexus Intelligence
+                </div>
+                <div class="logo-subtitle">Review Intelligence Platform</div>
+                <span class="logo-version">v2.0 · Enterprise</span>
+            </div>
+
+            <div class="sidebar-section">
+                <div class="sidebar-label">Review Ingestion</div>
+                <textarea id="review-input" class="review-textarea" rows="4"
+                    placeholder="Paste a customer review here..."></textarea>
+
+                <div class="toggle-row">
+                    <input type="checkbox" id="translate-toggle" checked>
+                    <label for="translate-toggle">Auto-translate (Hinglish → EN)</label>
+                </div>
+
+                <button id="ingest-btn" class="btn-primary btn-ingest">Submit Review</button>
+                <button id="batch-btn" class="btn-primary btn-batch">Upload Batch (JSON)</button>
+                <input type="file" id="batch-file" accept=".json" style="display:none">
+
+                <div id="ingest-status" class="status-msg"></div>
+            </div>
+
+            <div class="pipeline-info">
+                <div class="sidebar-label">Pipeline Status</div>
+                <div class="pipeline-stage"><span class="pipeline-dot"></span> Spam Filter</div>
+                <div class="pipeline-stage"><span class="pipeline-dot"></span> Text Denoiser</div>
+                <div class="pipeline-stage"><span class="pipeline-dot"></span> ABSA Engine</div>
+                <div class="pipeline-stage"><span class="pipeline-dot"></span> HDBSCAN Clustering</div>
+                <div class="pipeline-stage"><span class="pipeline-dot"></span> RAG Synthesis</div>
+
+                <a href="/storefront.html" target="_blank"
+                   style="display:block;margin-top:16px;padding:10px 16px;background:var(--primary-soft);color:var(--primary);border:1px solid rgba(37,99,235,0.15);border-radius:var(--radius);font-size:0.8rem;font-weight:600;text-decoration:none;text-align:center;transition:all 0.15s">
+                    Open Customer Storefront →
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="section-title">Overview</div>
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-label">Total Processed</div>
+                    <div class="kpi-value" id="kpi-total">0</div>
+                    <span class="kpi-icon">📊</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Clean Reviews</div>
+                    <div class="kpi-value green" id="kpi-clean">0</div>
+                    <span class="kpi-icon">✓</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Spam Flagged</div>
+                    <div class="kpi-value red" id="kpi-spam">0</div>
+                    <span class="kpi-icon">⊘</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Anomaly Clusters</div>
+                    <div class="kpi-value amber" id="kpi-anomalies">0</div>
+                    <span class="kpi-icon">△</span>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Sentiment Index</div>
+                    <div class="kpi-value blue" id="kpi-gsi">—</div>
+                    <span class="kpi-icon">◉</span>
+                </div>
+            </div>
+
+            <div class="section-title">Analytics</div>
+            <div class="chart-grid">
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <span class="dot" style="background:#ef4444"></span>
+                        Anomaly Clusters
+                    </div>
+                    <div class="chart-container"><canvas id="heatmapChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <span class="dot" style="background:#16a34a"></span>
+                        Sentiment Distribution
+                    </div>
+                    <div class="chart-container"><canvas id="sentimentChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <span class="dot" style="background:#7c3aed"></span>
+                        Feature Breakdown
+                    </div>
+                    <div class="chart-container"><canvas id="featureChart"></canvas></div>
+                </div>
+                <div class="chart-card">
+                    <div class="chart-title">
+                        <span class="dot" style="background:#2563eb"></span>
+                        Sentiment Timeline
+                    </div>
+                    <div class="chart-container"><canvas id="timelineChart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="section-title">Operations</div>
+            <div class="bottom-grid">
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <span class="dot" style="background:#ef4444"></span>
+                        Action Center
+                    </div>
+                    <div class="panel-body" id="action-center">
+                        <div class="empty-state">No risk clusters detected.</div>
+                    </div>
+                </div>
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <span class="dot" style="background:#ea580c"></span>
+                        Uncertainty Queue
+                    </div>
+                    <div class="panel-body" id="sarcasm-queue">
+                        <div class="empty-state">No ambiguous reviews.</div>
+                    </div>
+                </div>
+                <div class="panel-card">
+                    <div class="panel-header">
+                        <span class="dot" style="background:#16a34a"></span>
+                        Review Feed
+                    </div>
+                    <div class="panel-body" id="review-feed">
+                        <div class="empty-state">No reviews ingested.</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Strategy Modal -->
+    <div class="modal-overlay" id="strategy-modal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <div>
+                    <div class="modal-title">Strategy Synthesis</div>
+                    <div class="modal-subtitle" id="modal-subtitle">Cross-referencing industry specs…</div>
+                </div>
+                <button class="modal-close" id="close-modal">×</button>
+            </div>
+            <div class="modal-body" id="modal-content">
+                <div class="spinner-container">
+                    <div class="spinner"></div>
+                    <span class="spinner-text">Synthesizing…</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-download" id="download-btn" style="display:none">Download Brief (.md)</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="refresh-indicator">
+        <span class="refresh-dot"></span>
+        <span>AUTO-SYNC 10s</span>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

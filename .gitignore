@@ -1,0 +1,18 @@
+# Environments
+venv/
+.env
+__pycache__/
+
+# Secrets and API Keys (CRITICAL)
+.env
+
+# Databases and heavy AI models
+nexus_chroma/
+chroma_db/
+nexus_model/
+
+# Frontend dependencies
+node_modules/
+dist/
+.DS_Store
+dashboard.py
