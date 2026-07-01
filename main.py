@@ -9,7 +9,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import chromadb
-# ML & AI Imports
 from sklearn.metrics.pairwise import cosine_similarity
 from langchain_fireworks import ChatFireworks, FireworksEmbeddings
 from langchain_core.prompts import ChatPromptTemplate
@@ -48,7 +47,7 @@ if os.path.exists(_specs_path):
 else:
     INDUSTRY_SPECS = "No industry specifications loaded."
 
-# --- INITIALIZE MODELS (100% CLOUD/API - ZERO LOCAL DOWNLOADS) ---
+# --- INITIALIZE MODELS  ---
 print("[*] Connecting to Fireworks AI...")
 # 1. Fireworks API for Vector Embeddings
 embedding_model = FireworksEmbeddings(model="nomic-ai/nomic-embed-text-v1.5")
@@ -188,13 +187,13 @@ def store_db_node(state: ReviewState):
         
     return {"status": state.get("status")}
 
-# --- 4. LANGGRAPH ROUTING LOGIC ---
+# --- 4. LANGGRAPH ROUTING ---
 def route_spam(state: ReviewState):
     if state["is_spam"]:
         return "end"
     return "clean"
 
-# --- 5. BUILD THE GRAPH ---
+# --- 5.THE GRAPH ---
 workflow = StateGraph(ReviewState)
 
 workflow.add_node("spam_filter", check_spam_node)
@@ -204,7 +203,7 @@ workflow.add_node("store_db_node", store_db_node)
 
 workflow.set_entry_point("spam_filter")
 
-# Routing Logic: If spam -> End. If clean -> send to cleaner.
+# Routing : If spam -> End. If clean -> send to cleaner.
 workflow.add_conditional_edges(
     "spam_filter",
     route_spam,
@@ -463,7 +462,7 @@ async def get_sarcasm_queue():
 async def get_flagged():
     return {"flagged": flagged_reviews}
 
-# --- Storefront Reviews (for mock Amazon page) ---
+# --- Storefront Reviews (for demo page) ---
 class ApproveReplyRequest(BaseModel):
     reply_text: str
 
@@ -514,7 +513,7 @@ def approve_cluster_replies(cluster_id: int, request: ApproveReplyRequest):
     
     return {"status": "approved", "cluster_id": cluster_id, "reviews_updated": approved_count}
 
-# --- Review History (timeline-friendly) ---
+# --- Review History ---
 @app.get("/review-history")
 async def get_review_history():
     history = []
