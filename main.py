@@ -76,7 +76,7 @@ class ReviewState(TypedDict):
     is_spam: bool
     clean_text: str
     status: str
-    absa_result: dict  # Layer 2 data
+    absa_result: dict  
     translate: bool    # Whether to run translation
 
 # --- 3. LANGGRAPH NODES ---
@@ -108,7 +108,7 @@ def check_spam_node(state: ReviewState):
     return {"is_spam": False, "status": "Clean Human Data"}
 
 def clean_text_node(state: ReviewState):
-    """Layer 1: The Denoising & Translation Orchestrator"""
+    """The Denoising & Translation Orchestrator"""
     text = state["raw_text"]
     
     # If translate is disabled and text is likely English, skip heavy LLM call
@@ -126,7 +126,7 @@ def clean_text_node(state: ReviewState):
     return {"clean_text": clean_result.content}
 
 def absa_node(state: ReviewState):
-    """Layer 2: Aspect-Based Sentiment Analysis & Sarcasm Check"""
+    """Aspect-Based Sentiment Analysis & Sarcasm Check"""
     clean_text = state["clean_text"]
     
     absa_prompt = ChatPromptTemplate.from_messages([
@@ -166,7 +166,7 @@ def absa_node(state: ReviewState):
     return {"absa_result": absa_data, "status": state.get("status", "Analyzed Successfully")}
 
 def store_db_node(state: ReviewState):
-    """Layer 2.5: Store to Vector DB (Skip if Sarcasm)"""
+    """Store to Vector DB (Skip if Sarcasm)"""
     if "Sarcasm" in state.get("status", "") or "Low Confidence" in state.get("status", ""):
         return {"status": state.get("status")}
     
@@ -322,10 +322,10 @@ def batch_ingest(request: BatchReviewRequest):
     print(f"[BATCH] Complete: {len(results)}/{total} processed")
     return {"processed": len(results), "results": results}
 
-# --- Layer 4: Industry-Aware Gated Retrieval RAG ---
+# --- Industry-Aware Gated Retrieval RAG ---
 @app.post("/generate-strategy/{cluster_id}")
 def generate_strategy(cluster_id: int):
-    """Layer 4: Industry-Aware Gated Retrieval RAG"""
+    """Industry-Aware Gated Retrieval RAG"""
     # 1. Context Retrieval from cached cluster mapping
     if cluster_id not in cluster_cache:
         raise HTTPException(status_code=404, detail=f"Cluster {cluster_id} not found. Run /detect-anomalies first.")
@@ -591,7 +591,7 @@ def detect_anomalies():
             urgency = (negatives / info["count"]) + 1 if info["count"] > 0 else 1
             risk_score = info["count"] * urgency
             
-            # Cache the full cluster data for Layer 4 Gated Retrieval
+            # Cache the full cluster data for Gated Retrieval
             cluster_cache[int(lbl)] = {
                 "reviews": info["reviews"],
                 "feature": main_feature,
