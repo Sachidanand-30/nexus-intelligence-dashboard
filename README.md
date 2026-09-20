@@ -1,4 +1,4 @@
-# Nexus Intelligence — Review Intelligence Platform
+ Nexus Intelligence — Review Intelligence Platform
 
 Nexus Intelligence — Review Intelligence Platform is an enterprise-grade AI analytics system designed to process, denoise, cluster, and resolve unstructured e-commerce customer feedback. Powered by **LangGraph** for deterministic workflow state management, **LangChain** and **Fireworks AI** for intelligent transformation and extraction, **ChromaDB** for vector storage, and **Scikit-learn (HDBSCAN)** for spatial anomaly clustering, the platform automatically isolates zero-day defects and generates engineering strategies cross-referenced against technical specifications.
 
